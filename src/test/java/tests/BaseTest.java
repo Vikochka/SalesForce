@@ -1,9 +1,10 @@
 package tests;
 
 import org.testng.ITestContext;
+import org.testng.ITestResult;
 import org.testng.annotations.Listeners;
-import pages.ContactsPage;
-import pages.LoginPage;
+import steps.ContactSteps;
+import steps.LoginSteps;
 import utils.CapabilitiesGenerator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -17,25 +18,21 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest {
 
     WebDriver browser;
-    LoginPage loginPage;
-    ContactsPage contactsPage;
+    LoginSteps loginSteps;
+    ContactSteps contactSteps;
     ChromeOptions options = new ChromeOptions();
 
-
-    @BeforeMethod( description = "Opening browser")
+    @BeforeMethod(description = "Opening browser")
     public void setup(ITestContext context) {
         browser = new ChromeDriver(CapabilitiesGenerator.getChromeOptions());
-        options.addArguments("--disable-popup-blocking");
-        options.addArguments("--disable-notificatins");
-
+        context.setAttribute("driver", browser);
         browser.manage().window().maximize();
         browser.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         String variable = "driver";
         System.out.println("Setting driver into context with variable name " + variable);
         context.setAttribute(variable, browser);
-
-        loginPage = new LoginPage(browser);
-        contactsPage = new ContactsPage(browser);
+        loginSteps = new LoginSteps(browser);
+        contactSteps = new ContactSteps(browser);
     }
 
     @AfterMethod(alwaysRun = true, description = "Closing browser")
