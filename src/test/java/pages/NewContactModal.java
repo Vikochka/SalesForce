@@ -1,64 +1,54 @@
 package pages;
 
-import elements.Picklist;
-import elements.TextArea;
 import io.qameta.allure.Step;
-import modals.Contact;
-
+import models.Contact;
 import org.openqa.selenium.By;
-import elements.Input;
 import org.openqa.selenium.WebDriver;
-import elements.LookUp;
+import wrappers.DropDown;
+import wrappers.Input;
+import wrappers.LookUp;
+import wrappers.TextArea;
 
 public class NewContactModal extends BasePage {
-    public static final By SAVE_BUTTON = By.cssSelector("[name='SaveEdit']");
+    public static final By SAVE = By.xpath("//*[@name='SaveEdit']");
 
     public NewContactModal(WebDriver driver) {
         super(driver);
     }
 
-    public void openPage() {
-        driver.get("https://teachmeskillsqa.lightning.force.com/lightning/o/Contact/new?count=2&nooverride=1&useRecordTypeCheck=1&navigationLocation=MRU_LIST&backgroundContext=%2Flightning%2Fo%2FContact%2Flist%3FfilterName%3DRecent");
-    }
-
     @Step("Creating contact: {contact.lastName}")
-    public void create(Contact contact) {
-//        new Picklist(driver, "Salutation").chose(contact.getSalutation());
-        new Input(driver, "Last Name").write(contact.getLastName());
+    public void createContact(Contact contact) {
+        new DropDown(driver, "Salutation").choose(contact.getSalutation());
         new Input(driver, "First Name").write(contact.getFirstName());
-        new Input(driver, "Mobile").write(contact.getMobile());
-        new Input(driver, "Phone").write(contact.getPhone());
+        new Input(driver, "Last Name").write(contact.getLastName());
         new LookUp(driver, "Account Name").select(contact.getAccountName());
+        new Input(driver, "Title").write(contact.getTitle());
+        new Input(driver, "Phone").write(contact.getPhone());
+        new Input(driver, "Mobile").write(contact.getMobile());
+        new Input(driver, "Email").write(contact.getEmail());
         new LookUp(driver, "Reports To").select(contact.getReportsTo());
-        new Input(driver, "Email").write(contact.getMail());
-
-    //    new TextArea(driver, "Mailing Street").writeTextArea(contact.getMailingStreet());
+        new TextArea(driver, "Mailing Street").writeText(contact.getMailingStreet());
         new Input(driver, "Mailing City").write(contact.getMailingCity());
-        new Input(driver, "Mailing State/Province").write(contact.getMailingStateProvince());
-        new Input(driver, "Mailing Zip/Postal Code").write(contact.getMailingZipPostalCode());
-        new Input(driver, "Mailing State/Province").write(contact.getMailingStateProvince());
+        new Input(driver, "Mailing State").write(contact.getMailingState());
+        new Input(driver, "Postal Code").write(contact.getPostalCode());
         new Input(driver, "Mailing Country").write(contact.getMailingCountry());
-
-      //  new TextArea(driver, "Other Street").writeTextArea(contact.getOtherStreet());
+        new TextArea(driver, "Other Street").writeText(contact.getOtherStreet());
         new Input(driver, "Other City").write(contact.getOtherCity());
-        new Input(driver, "Other State/Province").write(contact.getOtherState());
-        new Input(driver, "Other Zip/Postal Code").write(contact.getOtherZipPostalCode());
+        new Input(driver, "Other State").write(contact.getOtherState());
+        new Input(driver, "Other Zip").write(contact.getOtherZip());
         new Input(driver, "Other Country").write(contact.getOtherCountry());
-
         new Input(driver, "Fax").write(contact.getFax());
         new Input(driver, "Home Phone").write(contact.getHomePhone());
         new Input(driver, "Other Phone").write(contact.getOtherPhone());
-        new Input(driver, "Asst. Phone").write(contact.getAsstPhone());
-        new Input(driver, "Assistant").write(contact.getFax());
+        new Input(driver, "Asst. Phone").write(contact.getAssistPhone());
+        new Input(driver, "Assistant").write(contact.getAssistant());
         new Input(driver, "Department").write(contact.getDepartment());
-    //    new Picklist(driver, "Lead Source").chose(contact.getOtherPhone());
-        new Input(driver, "Birthdate").write(contact.getBirthDate());
-      //  new TextArea(driver, "Description").writeTextArea(contact.getDescription());
+        new DropDown(driver, "Lead Source").choose(contact.getLeadSource());
+        new Input(driver, "Birthdate").addDate(contact.getBirthdate());
+        new TextArea(driver, "Description").writeText(contact.getDescription());
     }
 
-    @Step("Click 'Save'")
     public void save() {
-        driver.findElement(SAVE_BUTTON).click();
+        driver.findElement(SAVE).click();
     }
 }
-

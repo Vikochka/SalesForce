@@ -1,7 +1,7 @@
 package steps;
 
 import io.qameta.allure.Step;
-import modals.Contact;
+import models.Contact;
 import org.openqa.selenium.WebDriver;
 import pages.ContactListPage;
 import pages.NewContactModal;
@@ -17,10 +17,10 @@ public class ContactSteps {
     public void create(Contact contact) {
         ContactListPage contactListPage = new ContactListPage(driver);
         contactListPage.open();
+        contactListPage.isContactPageOpened();
         contactListPage.clickNew();
         NewContactModal newContactModal = new NewContactModal(driver);
-        newContactModal.openPage();
-        newContactModal.create(contact);
-        newContactModal.save();
+        newContactModal.createContact(contact);
+        //newContactModal.save();
     }
 }

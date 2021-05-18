@@ -2,7 +2,6 @@ package steps;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.MainPage;
 
@@ -15,8 +14,7 @@ public class LoginSteps {
         this.driver = driver;
     }
 
-    //login
-    @Step("Login by user: {username}")
+    @Step("Login by user: '{user}'")
     public void login(String user, String password) {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.open();

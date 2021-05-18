@@ -3,39 +3,27 @@ package pages;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.Assert;
+
 
 public class LoginPage extends BasePage {
-    //er.viktoria1919-ck6r@force.com
-    //Hipstr19
-
-
-    public static final By USER_NAME = By.id("username");
-    public static final By PASSWORD = By.id("password");
+    public static final By LOGIN_INPUT = By.id("username");
+    public static final By PASSWORD_INPUT = By.id("password");
     public static final By LOGIN_BUTTON = By.id("Login");
+    String URL = "https://techmeskills.lightning.force.com/";
 
     public LoginPage(WebDriver driver) {
         super(driver);
     }
 
-    @Step("Opening login page")
+    @Step("Open Authorization page")
     public void open() {
         driver.get(URL);
     }
 
-    @Step("Login by user {username}")
+    @Step("Login")
     public void login(String username, String password) {
-        driver.findElement(USER_NAME).sendKeys(username);
-        driver.findElement(PASSWORD).sendKeys(password);
+        driver.findElement(LOGIN_INPUT).sendKeys(username);
+        driver.findElement(PASSWORD_INPUT).sendKeys(password);
         driver.findElement(LOGIN_BUTTON).click();
-    }
-
-    public void waitForLoginPage() {
-        try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@title='All Pipeline - Current Year]")));
-        } catch (Exception ex) {
-            Assert.fail("ContatsPage was not opened");
-        }
     }
 }
